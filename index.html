@@ -1,22 +1,699 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Cricca Coffee</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: sans-serif; background: #fafaf7; color: #1a2a21; text-align: center; padding: 2em; }
-    h1 { color: #26734d; }
-    a.button {
-      display:inline-block; background:#26734d; color:#fff; padding:1em 2em; border-radius:2em; text-decoration:none; margin-top:2em;
-      transition:background 0.2s;
-    }
-    a.button:hover { background:#21593d; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricca Coffee</title>
+    <style>
+        /* Estilos principales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f5f0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #2c5e1a 0%, #4CAF50 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 80vh;
+            overflow: hidden;
+            margin-bottom: 4rem;
+        }
+
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #2c5e1a;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-content h3 {
+            color: #2c5e1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #2c5e1a;
+            margin-bottom: 1rem;
+        }
+
+        /* Offers */
+        .offers {
+            background: linear-gradient(135deg, #4CAF50 0%, #2c5e1a 100%);
+            color: white;
+            padding: 3rem 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .offers h2 {
+            margin-bottom: 1rem;
+        }
+
+        .discount {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        /* Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .team-member-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 5px solid #4CAF50;
+        }
+
+        .team-member h3 {
+            color: #2c5e1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-member .role {
+            color: #4CAF50;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c5e1a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Cart Styles */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 350px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .cart-modal.open {
+            right: 0;
+        }
+
+        .close-cart {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            margin: 20px 0;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: #2c5e1a;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Cricca Coffee</h1>
-  <p>¡Bienvenido a nuestra nueva landing page en GitHub Pages! ☕️</p>
-  <a class="button" href="https://github.com/did-maker/Cricca-Coffee-Experience-">Ver repositorio en GitHub</a>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <h1>Cricca Coffee</h1>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#about">Nosotros</a></li>
+                    <li><a href="#products">Productos</a></li>
+                    <li><a href="#team">Equipo</a></li>
+                    <li><a href="#events">Eventos</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <video class="hero-video" autoplay muted loop>
+            <source src="https://streamable.com/lp6242" type="video/mp4">
+            Tu navegador no soporta videos.
+        </video>
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1>Cricca Coffee</h1>
+                <p>Un espacio para vivir el café, no solo para tomarlo.</p>
+                <a href="#products" class="btn">Explora Nuestros Cafés</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="container">
+        <h2 class="section-title">Pasión por el café auténtico</h2>
+        <p>En Cricca Coffee, ofrecemos una selección de café de origen, tés e infusiones, así como cafeteras y molinillos de alta calidad. Somos una pequeña tienda de café comprometida con ofrecer los mejores granos de café de origen y productos relacionados. Valoramos la calidad y el sabor auténtico en cada taza.</p>
+        
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">☕</div>
+                <h3>Café de Origen</h3>
+                <p>Selección cuidadosa de los mejores granos de todo el mundo, tostados individualmente.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔥</div>
+                <h3>Tostado Artesanal</h3>
+                <p>Cada lote es tostado con precisión para resaltar sus características únicas.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Comunidad</h3>
+                <p>Un espacio para amantes del café, donde compartir experiencias y conocimientos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="container">
+        <h2 class="section-title">Nuestros Productos</h2>
+        <div class="cards-grid">
+            <!-- Pack de los 4 Continentes -->
+            <div class="card">
+                <img src="https://i.ibb.co/8LkSgRQN/pack-4-continentes-1.jpg" alt="Pack de los 4 Continentes" class="card-img">
+                <div class="card-content">
+                    <h3>Pack de los 4 Continentes</h3>
+                    <p>Descubre el mundo del café con esta selección exclusiva de 4 cafés de origen, uno de cada continente. Perfecto para exploradores del sabor.</p>
+                    <p class="price">99€</p>
+                    <p><s>144€</s> ¡Ahorra 45€! (31% OFF)</p>
+                    <button class="btn" onclick="addToCart({name:'Pack de los 4 Continentes', price:99, image:'https://i.ibb.co/8LkSgRQN/pack-4-continentes-1.jpg'})">Añadir al Carrito</button>
+                </div>
+            </div>
+            
+            <!-- Rwanda Orgánico -->
+            <div class="card">
+                <img src="https://i.ibb.co/gb28KTTX/image-4.jpg" alt="Rwanda Orgánico" class="card-img">
+                <div class="card-content">
+                    <h3>Rwanda Orgánico</h3>
+                    <p>Café orgánico de las montañas de Rwanda, con notas florales y cítricas.</p>
+                    <p class="price">31€</p>
+                    <button class="btn" onclick="addToCart({name:'Rwanda Orgánico', price:31, image:'https://i.ibb.co/gb28KTTX/image-4.jpg'})">Añadir al Carrito</button>
+                </div>
+            </div>
+            
+            <!-- Papúa Nueva Guinea -->
+            <div class="card">
+                <img src="https://i.ibb.co/N679NwDw/image-5.jpg" alt="Papúa Nueva Guinea" class="card-img">
+                <div class="card-content">
+                    <h3>Papúa Nueva Guinea</h3>
+                    <p>Café con cuerpo completo y notas de chocolate oscuro.</p>
+                    <p class="price">39€</p>
+                    <button class="btn" onclick="addToCart({name:'Papúa Nueva Guinea', price:39, image:'https://i.ibb.co/N679NwDw/image-5.jpg'})">Añadir al Carrito</button>
+                </div>
+            </div>
+            
+            <!-- Kenia Massai AA -->
+            <div class="card">
+                <img src="https://i.ibb.co/fVbQg2W5/image-6.jpg" alt="Kenia Massai AA" class="card-img">
+                <div class="card-content">
+                    <h3>Kenia Massai AA</h3>
+                    <p>Café AA de alta calidad con acidez brillante y notas cítricas.</p>
+                    <p class="price">39€</p>
+                    <button class="btn" onclick="addToCart({name:'Kenia Massai AA', price:39, image:'https://i.ibb.co/fVbQg2W5/image-6.jpg'})">Añadir al Carrito</button>
+                </div>
+            </div>
+            
+            <!-- Burundi -->
+            <div class="card">
+                <img src="https://i.ibb.co/zhH01bkm/image-1.jpg" alt="Burundi" class="card-img">
+                <div class="card-content">
+                    <h3>Burundi</h3>
+                    <p>Café africano con notas de caramelo y cuerpo sedoso.</p>
+                    <p class="price">31€</p>
+                    <button class="btn" onclick="addToCart({name:'Burundi', price:31, image:'https://i.ibb.co/zhH01bkm/image-1.jpg'})">Añadir al Carrito</button>
+                </div>
+            </div>
+            
+            <!-- Etiopía -->
+            <div class="card">
+                <img src="https://i.ibb.co/QvqGqQBq/image-2.jpg" alt="Etiopía" class="card-img">
+                <div class="card-content">
+                    <h3>Etiopía</h3>
+                    <p>Yirgacheffe con notas florales y té verde.</p>
+                    <p class="price">31€</p>
+                    <button class="btn" onclick="addToCart({name:'Etiopía', price:31, image:'https://i.ibb.co/QvqGqQBq/image-2.jpg'})">Añadir al Carrito</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section class="container">
+        <div class="offers">
+            <h2>Oferta Especial</h2>
+            <p>Descubre el mundo del café con esta selección exclusiva</p>
+            <div class="discount">¡Ahorra 45€! (31% OFF)</div>
+            <a href="#products" class="btn">Ver Pack</a>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="container">
+        <h2 class="section-title">Nuestro Equipo</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="https://i.ibb.co/4RPwsVZT/manu-barista.jpg" alt="Manu" class="team-member-img">
+                <h3>Manu</h3>
+                <div class="role">Barista Profesional & Manager</div>
+                <p>Nacido en Calella, Manu es el alma técnica de Cricca Coffee. Su pasión por el café de origen lo llevó a formarse como barista profesional, especializándose en tostado artesanal y métodos de preparación precisos. Cada día garantiza que cada taza sea una experiencia perfecta, respetando el grano, el proceso y la tradición.</p>
+            </div>
+            <div class="team-member">
+                <img src="https://i.ibb.co/JWmqb97h/trotski-cachorro.jpg" alt="Trotski" class="team-member-img">
+                <h3>Trotski</h3>
+                <div class="role">Chief Happiness Officer 🐾</div>
+                <p>Cachorro Jack Russell y alma de la tienda. Su trabajo consiste en vigilar que el café esté bien tostado... y que todos salgan con una sonrisa.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="container">
+        <h2 class="section-title">Eventos y Cata Exclusivas</h2>
+        <div class="card">
+            <img src="https://i.ibb.co/yBx5kf9R/image_1.jpg" alt="Cata Exclusiva" class="card-img">
+            <div class="card-content">
+                <h3>Cata Exclusiva con Tornado Coffee Roasters</h3>
+                <p>Fecha: Próximamente</p>
+                <p>Hora: 18:00 - 20:00</p>
+                <p>Lugar: Cricca Coffee, Calella</p>
+                <p>En colaboración con Tornado Coffee Roasters, presentamos una cata sensorial única, donde descubrirás los perfiles de sabor, origen y proceso de cafés de especialidad traídos especialmente para esta ocasión.</p>
+                <p>Entrada gratuita con compra de 25€ o más</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container">
+        <h2 class="section-title">Contacto</h2>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-content">
+                    <h3>Información de Contacto</h3>
+                    <p>Email: contacto@criccacoffee.es</p>
+                    <p>Teléfono: +34 123 456 789</p>
+                    <p>Dirección: Calle de la Avenida, 123, Calella</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h3>Horario</h3>
+                    <p>Lunes - Viernes: 8:00 - 20:00</p>
+                    <p>Sábado: 8:00 - 18:00</p>
+                    <p>Domingo: Cerrado</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; {new Date().getFullYear()} Cricca Coffee. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <button class="close-cart" onclick="toggleCart()">✕</button>
+        <h2>Carrito de Compras</h2>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-total" id="cartTotal"></div>
+        <button class="btn" onclick="checkout()">Proceder al Pago</button>
+    </div>
+
+    <!-- Cart Icon -->
+    <button class="btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 999;" onclick="toggleCart()">
+        🛒 Carrito (0)
+    </button>
+
+    <script>
+        // Variables globales
+        let cart = [];
+        let cartCount = 0;
+
+        // Funciones del carrito
+        function addToCart(product) {
+            cart.push(product);
+            cartCount++;
+            updateCartDisplay();
+            alert(`${product.name} añadido al carrito`);
+        }
+
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const cartIcon = document.querySelector('.btn[onclick="toggleCart()"]');
+            
+            cartItems.innerHTML = '';
+            let total = 0;
+            
+            cart.forEach(item => {
+                total += item.price;
+                cartItems.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div>
+                            <p>${item.name}</p>
+                            <p>${item.price}€</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            cartTotal.textContent = `Total: ${total.toFixed(2)}€`;
+            cartIcon.innerHTML = `🛒 Carrito (${cartCount})`;
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.toggle('open');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío');
+                return;
+            }
+            alert('Gracias por tu compra. Serás redirigido al proceso de pago.');
+            cart = [];
+            cartCount = 0;
+            updateCartDisplay();
+            toggleCart();
+        }
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize cart count
+        updateCartDisplay();
+    </script>
 </body>
 </html>
